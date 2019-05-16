@@ -150,6 +150,7 @@ That's up to you.  I use (shameless plug):
 # Example Bash Script
 
 Here's an example bash script that has a lot of good things going on.
+This is just one way to do it.
 
 * my_script.sh
 
