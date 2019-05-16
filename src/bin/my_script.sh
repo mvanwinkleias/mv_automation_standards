@@ -26,9 +26,10 @@ function write_log
 
 write_log "$0 $@ $LOGNAME $$ $( pwd ) ---STARTING---"
 
+# Put your code here.
+
 my_script_debug "This is a debug message."
 my_script_verbose "This is a verbose message."
 
-# Put your code here.
 
 write_log "$0  ---ENDING---"

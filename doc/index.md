@@ -4,6 +4,9 @@ This repository will grow with more information.  It's intended
 for people who are looking to either improve their Automation processes
 or "get ahead of the game" by starting off in a better posture.
 
+These standards apply to all programming languages that run in a Unix
+environment.
+
 At the end of this document is a bash script that does many of these things.
 
 # Program Standards
@@ -20,13 +23,17 @@ Good Unix programs:
 
 ## Add verbose and debug options to your scripts
 
-These should default to off.
+These should default to off.  That way, when you cron it, it
+works according to the cron standards listed below.
+
+These can be enabled from, for example, environment variables or command
+line arguments.
 
 ## Logging
 
-Not all programs need to log.  Sometimes I call a non-logging program
+Not all programs need to log.  Sometimes I wrap a non-logging program
 from a program that does log.  In general, if I'm cronning something
-I want it to log.
+I want it to log.  Cron will log when it has run something, but not much else.
 
 A good default for logging is syslog.  It gets a lot of (deserved) flack
 for not being easily parsed, but it gets the job done.
@@ -175,10 +182,10 @@ function write_log
 
 write_log "$0 $@ $LOGNAME $$ $( pwd ) ---STARTING---"
 
+# Put your code here.
+
 my_script_debug "This is a debug message."
 my_script_verbose "This is a verbose message."
-
-# Put your code here.
 
 write_log "$0  ---ENDING---"
 
