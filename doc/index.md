@@ -94,7 +94,10 @@ you shouldn't need to do this.
 This means that when something DOES go wrong, you should get emailed.
 
 Don't use individual user's crontab files to cron up things.  If you're
-gonna cron, use /etc/cron.d .
+gonna cron, use /etc/cron.d .  If it's important:
+
+* It shouldn't run as a non-service user account
+* It should require some level of restricted permissions to alter
 
 ## Email
 
