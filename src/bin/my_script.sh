@@ -2,6 +2,7 @@
 
 MY_SCRIPT_DEBUG="${MY_SCRIPT_DEBUG:-0}"
 MY_SCRIPT_VERBOSE="${MY_SCRIPT_VERBOSE:-0}"
+MY_SCRIPT_LOG_TO_STDOUT="${MY_SCRIPT_LOG_TO_STDOUT:-0}"
 
 function my_script_debug
 {
@@ -21,7 +22,11 @@ function my_script_verbose
 
 function write_log
 {
-	logger "$0[$$]: "
+	logger "$0[$$]: $@"
+	if [[ "$MY_SCRIPT_LOG_TO_STDOUT" == "1" ]]
+	then
+		echo "$@"	
+	fi
 }
 
 write_log "$0 $@ $LOGNAME $$ $( pwd ) ---STARTING---"
