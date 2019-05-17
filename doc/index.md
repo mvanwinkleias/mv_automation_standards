@@ -29,11 +29,53 @@ works according to the cron standards listed below.
 These can be enabled from, for example, environment variables or command
 line arguments.
 
+## Filesystem / Repository Layout
+
+Here's an example layout that I use inside of my repositories that allows
+you to check out the code and run it anywhere.
+
+```
+example_repo/
+├── doc
+│   └── index.md
+├── Makefile
+├── README.md
+└── src
+    ├── bin
+    │   └── example-repo_hello.sh
+    ├── input
+    ├── log
+    └── output
+```
+
+These get checked in:
+
+* doc - More expansive documentation about the project (if needed)
+* Makefile - Does what Makefiles do.
+* README.md - documentation overview
+* src/bin - where your scripts go
+
+The following directories do not get checked in (use .gitignore)
+
+* src/input - Where the scripts look to consume files
+* src/log - Where log files go (if you're not logging to syslog; I log to syslog)
+* src/output - Where things like "reports" go  
+
 ## Logging
 
-Not all programs need to log.  Sometimes I wrap a non-logging program
-from a program that does log.  In general, if I'm cronning something
-I want it to log.  Cron will log when it has run something, but not much else.
+For this section, logging refers to things like:
+* the progress of a program
+* logging actions taken
+* problems along the way
+etc
+
+There's a subtle difference between these logs and the "output" of a program,
+such as a "report".
+
+Not all programs need to log, but in general, if I'm cronning something
+I want it to log, and more so than what Cron logs by default.
+
+Sometimes I wrap a non-logging program from a program that does log.
 
 A good default for logging is syslog.  It gets a lot of (deserved) flack
 for not being easily parsed, but it gets the job done.
@@ -49,6 +91,23 @@ When the program finishes:
 
 * If the program failed, it should log that it failed 
 * It should log that it's ending
+
+## Problems
+
+Problems encountered and detected typically fall into two categories:
+
+* Immediate Action
+* Deferred Action
+
+Unless it's otherwise a bad idea to do so (privacy, or another reason) problems
+should be logged.
+
+Problems requiring immediate action should write to stderr (which will cause
+cron to send an email).
+
+Problems that don't need immediate attention "aren't really problems", they're
+just things you need to get around doing, and those should be written to an
+output file.
 
 ## Successive Runs
 
@@ -76,6 +135,8 @@ Example:
 ## Service User Accounts
 
 * Do not cron things as your own user.  Use a service user account.
+* You should avoid cronning things as root unless it needs it. (Principle of least
+privilidge, etc).
 * Have email from that service user account forwarded to a mail address that is a
 group, even if that group only consists of one person.
 
