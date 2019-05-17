@@ -4,10 +4,34 @@ This repository will grow with more information.  It's intended
 for people who are looking to either improve their Automation processes
 or "get ahead of the game" by starting off in a better posture.
 
+This document mostly will focus on "what to do" as opposed to "how to do it."
+"How **I** do it" is similar but significantly more expansive, and is
+documented elsewhere. 
+
 These standards apply to all programming languages that run in a Unix
 environment.
 
 At the end of this document is a bash script that does many of these things.
+
+In src/bin of this repository there is my_script.sh , which contains more
+abstracted goodness, and example code.
+
+# For the Inexperienced
+
+Automating things can seem daunting.  I recommend that you read through
+this document just to get an idea of what you should be moving toward.
+You don't need to memorize it.
+
+Then:
+
+* Create a repository that's laid out as documented in the "Filesystem / 
+Repository Layout" section of this document
+* Put the script at the end of this document in the src/bin dir of the repository
+* Experiment and get a good idea of what's going on.  Get comfortable.
+
+# For the Experienced
+
+Please submit pull requests ;)
 
 # Program Standards
 
@@ -31,8 +55,12 @@ line arguments.
 
 ## Filesystem / Repository Layout
 
-Here's an example layout that I use inside of my repositories that allows
-you to check out the code and run it anywhere.
+You need to choose and standardize where things are going to be installed,
+and laid out.
+
+### Repository Layout - How
+
+Here's an example repository layout that's similar to what I use.
 
 ```
 example_repo/
@@ -59,7 +87,54 @@ The following directories do not get checked in (use .gitignore)
 
 * src/input - Where the scripts look to consume files
 * src/log - Where log files go (if you're not logging to syslog; I log to syslog)
-* src/output - Where things like "reports" go  
+* src/output - Where things like "reports" go
+
+src/bin/my_script.sh works inside of this.
+
+
+### Filesystem Layout - How
+
+If you're not going to deploy things with packages, a basic layout could look
+something like:
+
+```
+/opt/
+└── AwesomeSchool
+    ├── bin
+    ├── output
+    └── repos
+        ├── example_project1
+        │   ├── doc
+        │   │   └── index.md
+        │   ├── Makefile
+        │   ├── README.md
+        │   └── src
+        │       └── bin
+        │           └── example-project1_hello.sh
+        ├── example_project2
+        │   ├── doc
+        │   │   └── index.md
+        │   ├── Makefile
+        │   ├── README.md
+        │   └── src
+        │       └── bin
+        │           └── example-project2_hello.sh
+        └── example_project3
+            ├── doc
+            │   └── index.md
+            ├── Makefile
+            ├── README.md
+            └── src
+                └── bin
+                    └── example-project3_hello.sh
+
+```
+
+Where:
+* AwesomeSchool is the name of your institution
+
+
+
 
 ## Logging
 
@@ -214,7 +289,8 @@ That's up to you.  I use (shameless plug):
 # Example Bash Script
 
 Here's an example bash script that has a lot of good things going on.
-This is just one way to do it.
+This is just one way to do it.  Under /src/bin of this repository you will
+find a more comprehensive script that contains more useful stuff.
 
 * my_script.sh
 
@@ -242,7 +318,7 @@ function my_script_verbose
 
 function write_log
 {
-	logger "$0[$$]: "
+	logger "$0[$$]: $@"
 }
 
 write_log "$0 $@ $LOGNAME $$ $( pwd ) ---STARTING---"
@@ -276,4 +352,7 @@ This is a debug message.
 This is a verbose message.
 ```
 
+# For the Future
 
+I'm open to the possibility of creating a workshop for "How __I__ do things"
+if the interest is there.
