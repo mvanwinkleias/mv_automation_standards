@@ -21,32 +21,6 @@ MY_SCRIPT_NAME="${MY_SCRIPT_FILE_NAME%.*}"
 # useful routines
 ##############################
 
-function get_directory
-{
-	local name="$1"
-	echo "${MY_SCRIPT_REALPATH}/../${name}"
-	
-}
-
-function get_output_file_name
-{
-	remainder="$1"
-
-	if [[ ! -n "$remainder" ]]; then
-		remainder='generic.txt'
-	fi
-
-	local output_file_date="$( date "+%Y-%m-%d-%H-%M-%S" )"
-	
-	local output_dir = "$(get_directory output)"
-	# mkdir -p "$output_dir"
-	
-	local file_name="${output_dir}/${output_file_date}--${MY_SCRIPT_NAME}--${remainder}"
-	
-	echo "$file_name"
-
-}
-
 function my_script_debug
 {
 	if [[ "$MY_SCRIPT_DEBUG" == "1" ]]
@@ -72,6 +46,44 @@ function write_log
 	fi
 }
 
+function get_directory
+{
+	local name="$1"
+	echo "${MY_SCRIPT_REALPATH}/../${name}"
+	
+}
+
+function get_output_file_name
+{
+	remainder="$1"
+
+	if [[ ! -n "$remainder" ]]; then
+		remainder='generic.txt'
+	fi
+
+	local output_file_date="$( date "+%Y-%m-%d-%H-%M-%S" )"
+	
+	local output_dir="$(get_directory output)/${MY_SCRIPT_NAME}"
+	
+	mkdir -p "$output_dir"
+	local result=$?
+	
+	if [[ ! $result ]]
+	then
+		msg="Unable to create directory: $output_dir"
+		write_log $msg
+		
+		exit 1
+	fi 
+	
+	
+	local file_name="${output_dir}/${output_file_date}--${remainder}"
+	
+	echo "$file_name"
+
+}
+
+
 write_log "$0 $@ $LOGNAME $$ $( pwd ) ---STARTING---"
 
 ####################################
@@ -85,9 +97,14 @@ write_log "Log directory: " $( get_directory log )
 write_log "Output directory: " $( get_directory output )
 write_log "Input directory: " $( get_directory input )
 
+# You can use this to create files that are named nicely:
 output_file_name="$( get_output_file_name "sample.txt" )"
 
 write_log "Here is an example output file name: $output_file_name"
+
+echo "Hello, world!" >> $output_file_name
+date >> $output_file_name
+
 ###################################
 # Put your code here.
 ###################################
