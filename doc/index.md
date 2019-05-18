@@ -42,8 +42,12 @@ Good Unix programs:
 * Do not output anything to stderr or stdout UNLESS:
 	* they've been told to (i.e. debug, verbose, etc).
 	* Something went wrong.  (Use stderr for this.)
+	* They've been designed to as some sort of "human interface", like **mtr**
+	or **traceroute**.
 * exit 0 when stuff goes OK.
 * exit non-zero when stuff goes wrong.
+
+Where do you output "reports" ?  To files.
 
 ## Add verbose and debug options to your scripts
 
@@ -53,12 +57,12 @@ works according to the cron standards listed below.
 These can be enabled from, for example, environment variables or command
 line arguments.
 
-## Filesystem / Repository Layout
+## Filesystem / Repository Layout (How)
 
 You need to choose and standardize where things are going to be installed,
 and laid out.
 
-### Repository Layout - How
+### Repository Layout
 
 Here's an example repository layout that's similar to what I use.
 
@@ -92,16 +96,22 @@ The following directories do not get checked in (use .gitignore)
 src/bin/my_script.sh works inside of this.
 
 
-### Filesystem Layout - How
+### Filesystem Layout
 
 If you're not going to deploy things with packages, a basic layout could look
 something like:
 
 ```
-/opt/
+/opt
 └── AwesomeSchool
     ├── bin
+    │   ├── example-project1_hello.sh -> ../repos/example_project1/src/bin/example-project1_hello.sh
+    │   ├── example-project2_hello.sh -> ../repos/example_project2/src/bin/example-project2_hello.sh
+    │   └── example-project3_hello.sh -> ../repos/example_project3/src/bin/example-project3_hello.sh
     ├── output
+    │   ├── example_project1 -> ../repos/example_project1/src/output/
+    │   ├── example_project2 -> ../repos/example_project2/src/output/
+    │   └── example_project3 -> ../repos/example_project3/src/output/
     └── repos
         ├── example_project1
         │   ├── doc
@@ -109,33 +119,75 @@ something like:
         │   ├── Makefile
         │   ├── README.md
         │   └── src
-        │       └── bin
-        │           └── example-project1_hello.sh
+        │       ├── bin
+        │       │   └── example-project1_hello.sh
+        │       └── output
+        │           └── example-project1_hello
+        │               └── 2019-05-18-07-51-30--sample.txt
         ├── example_project2
         │   ├── doc
         │   │   └── index.md
         │   ├── Makefile
         │   ├── README.md
         │   └── src
-        │       └── bin
-        │           └── example-project2_hello.sh
+        │       ├── bin
+        │       │   └── example-project2_hello.sh
+        │       └── output
+        │           └── example-project2_hello
+        │               └── 2019-05-18-07-52-15--sample.txt
         └── example_project3
             ├── doc
             │   └── index.md
             ├── Makefile
             ├── README.md
             └── src
-                └── bin
-                    └── example-project3_hello.sh
+                ├── bin
+                │   └── example-project3_hello.sh
+                └── output
+                    └── example-project3_hello
+                        └── 2019-05-18-07-52-48--sample.txt
 
 ```
 
 Where:
 * AwesomeSchool is the name of your institution
 
+#### How Does This Work?
 
+##### Repositories
 
+* You clone / check out repositories under /opt/AwesomeSchool/repos using
+a user that's DIFFERENT than the service account user
+* Change the output directory to be writable by the service account user
+* When you want to update, you run "git pull", or whatever.  Keep in mind,
+you should have some way of logging what version of what repo is currently pulled
 
+##### Symbolic Links
+
+You can, for example, symbolically link /opt/AwesomeSchool/repos/example_project1/src/bin/example-project2_hello.sh to /opt/AwesomeSchool/bin/example-project2_hello.sh .  But you
+should use relative links, as described above.
+
+You can also do the same thing for the output directories as well.
+
+Configure apache to export (password protected (if necessary), over https) directories
+under /opt/AwesomeSchool/output
+
+##### Installation
+
+Putting this all together (if you're not using packages), installation consists of:
+
+* Cloning / checking out the repository to /opt/AwesomeSchool/repos
+* Logging which version of the repository is checked out / cloned
+* Modifying the permission of the output directory
+* (Optionally)
+	* Symbolically linking (whichever)files under repos/example_project1/src/bin/ to /opt/AwesomeSchool/bin
+	* Symbolically linking repos/example_project1/src/output to /opt/AwesomeSchool/output
+	* Configuring apache appropriately
+
+##### Updates
+
+* Pulling whatever version of the repo you want
+* Logging which revision is currently installed
 ## Logging
 
 For this section, logging refers to things like:
