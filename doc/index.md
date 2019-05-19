@@ -1,22 +1,35 @@
-# Automation Standards
+# Automation Guidelines
 
 This repository will grow with more information.  It's intended
 for people who are looking to either improve their Automation processes
 or "get ahead of the game" by starting off in a better posture.
+This is not to be thought of as being "set in stone", but more of "what to tend
+toward."
 
 This document mostly will focus on "what to do" as opposed to "how to do it."
 "How **I** do it" is similar but significantly more expansive, and is
 documented elsewhere. 
 
 These standards apply to all programming languages that run in a Unix
-environment.
+environment which you'd like to use for automation.  It's meant to be language
+agnostic.
 
 At the end of this document is a bash script that does many of these things.
 
 In src/bin of this repository there is my_script.sh , which contains more
-abstracted goodness, and example code.
+goodness, and example code.
+
+This document will be written from the perspective of wanting to use cron
+to schedule jobs.
+
+# For the Purposes of this Document
+
+When I say, things like "output to a file", I mean a storage and retrieval system.
+You could also sftp files different places, us NFS, etc.
 
 # For the Inexperienced
+
+You MUST get good at a revision control system if you're automating things.
 
 Automating things can seem daunting.  I recommend that you read through
 this document just to get an idea of what you should be moving toward.
@@ -35,9 +48,39 @@ Please submit pull requests ;)
 
 # Program Standards
 
+## Problems
+
+Problems encountered and detected typically fall into two categories:
+
+* Immediate Action
+* Deferred Action
+
+Unless it's otherwise a bad idea to do so (privacy, or another reason) problems
+should be logged (to, say, syslog).
+
+Problems requiring immediate action should, for example, write to stderr
+(which will cause cron to send an email).
+
+Problems that don't need immediate attention "aren't really problems", they're
+just things you need to get around doing
+
+
+## Human Interaction: Immediate Actions and Deferred Actions
+
+TODO: This section needs a bit of work.
+
+It's best to decouple the "reporting" aspect and the "alerting" aspect.
+
+Write your programs in a manner that helps you "get around to 
+it later", even if you plan on immediately acting on the information provided.
+
+Prioritization is up to you, and priorities change.  If you have to change code
+to make something "less important", it's more likely that you won't change it
+and then you'll start ignoring things.
+
 ## Unix Standards
 
-Good Unix programs:
+Good Unix "non-interactive" "automation" programs:
 
 * Do not output anything to stderr or stdout UNLESS:
 	* they've been told to (i.e. debug, verbose, etc).
@@ -75,6 +118,7 @@ example_repo/
 └── src
     ├── bin
     │   └── example-repo_hello.sh
+    ├── etc
     ├── input
     ├── log
     └── output
@@ -86,6 +130,7 @@ These get checked in:
 * Makefile - Does what Makefiles do.
 * README.md - documentation overview
 * src/bin - where your scripts go
+* src/etc - non-sensitive configuration files
 
 The following directories do not get checked in (use .gitignore)
 
@@ -101,6 +146,7 @@ src/bin/my_script.sh works inside of this.
 If you're not going to deploy things with packages, a basic layout could look
 something like:
 
+#### /opt
 ```
 /opt
 └── AwesomeSchool
@@ -151,6 +197,32 @@ something like:
 
 Where:
 * AwesomeSchool is the name of your institution
+
+#### Service User Home directory
+
+```
+/home
+└── service-user
+    └── .config
+        └── AwesomeSchool
+            ├── example-project1
+            │   └── credentials.json
+            └── example-project2
+                └── some_secret.txt
+```
+
+#### /etc/
+
+```
+/
+└── etc
+    └── AwesomeSchool
+        ├── awesome-project2
+        │   └── some_config.conf
+        └── awesome-project3
+            └── project3-config.json
+```
+
 
 #### How Does This Work?
 
@@ -219,22 +291,6 @@ When the program finishes:
 * If the program failed, it should log that it failed 
 * It should log that it's ending
 
-## Problems
-
-Problems encountered and detected typically fall into two categories:
-
-* Immediate Action
-* Deferred Action
-
-Unless it's otherwise a bad idea to do so (privacy, or another reason) problems
-should be logged.
-
-Problems requiring immediate action should write to stderr (which will cause
-cron to send an email).
-
-Problems that don't need immediate attention "aren't really problems", they're
-just things you need to get around doing, and those should be written to an
-output file.
 
 ## Successive Runs
 
