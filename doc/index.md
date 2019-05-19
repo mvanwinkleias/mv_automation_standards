@@ -271,10 +271,12 @@ etc
 There's a subtle difference between these logs and the "output" of a program,
 such as a "report".
 
-Not all programs need to log, but in general, if I'm cronning something
+Not all programs need to log, but in general, if I'm cronning something then
 I want it to log, and more so than what Cron logs by default.
 
-Sometimes I wrap a non-logging program from a program that does log.
+Sometimes I wrap a non-logging program in a program that does log.  This is
+typically what I do when something, such as a series of pipes, needs to be
+cronned up.
 
 A good default for logging is syslog.  It gets a lot of (deserved) flack
 for not being easily parsed, but it gets the job done.
@@ -310,7 +312,7 @@ Example:
 * Check for a pid file under /var/run,
 * If it's there
 	* Write to stderr about how it's there (and log it, if applicable)
-	* exit.
+	* exit non-zero.
 * If not, put a pid file under /var/run
 * Remove the file when you're done
 
@@ -445,20 +447,25 @@ Then you can run:
 ```
 my_script.sh
 ```
-Which shouldn't have outputted anything.  Check syslog, you'll see:
+Which shouldn't have outputted anything.  Check syslog.
 
-
+If you then run this:
 ```
 export MY_SCRIPT_DEBUG=1
 export MY_SCRIPT_VERBOSE=1
+my_script.sh
 ```
 
-Which should output:
+You should see:
 
 ```
 This is a debug message.
 This is a verbose message.
 ```
+
+The motivation for debug and verbose messages to go to stderr is that if
+you're piping to something that listens on stdin, output on stderr shouldn't
+interfere with it.
 
 # For the Future
 
