@@ -211,7 +211,10 @@ Where:
                 └── some_secret.txt
 ```
 
-#### /etc/
+I put credentials in the service user's home directory (with the appropriate
+permissions, of course).  
+
+#### /etc
 
 ```
 /
@@ -223,6 +226,7 @@ Where:
             └── project3-config.json
 ```
 
+Credentials can also go under /etc, with the appropriate permissions.
 
 #### How Does This Work?
 
@@ -233,6 +237,7 @@ a user that's DIFFERENT than the service account user
 * Change the output directory to be writable by the service account user
 * When you want to update, you run "git pull", or whatever.  Keep in mind,
 you should have some way of logging what version of what repo is currently pulled
+* Don't put credentials in the repository.  Use /etc, or ~/.config/AwesomeSchool/project-name
 
 ##### Symbolic Links
 
@@ -471,3 +476,12 @@ interfere with it.
 
 I'm open to the possibility of creating a workshop for "How __I__ do things"
 if the interest is there.
+
+# Idiosyncracies
+
+## Hyphens vs. Underscores
+
+When referring to a "project", I use underscores.  When referring to an artifact
+I use hyphens.
+
+
