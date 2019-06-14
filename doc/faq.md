@@ -4,6 +4,22 @@ Usually when somebody asks a question, "How do I X?", there are Do's and Don'ts.
 
 If I provide a "Don't", I'll try to provide a "How", which will just be an example.
 
+## Getting Started
+
+### Revision Control Systems
+
+This is the only part in this document where I will speak prophetically.
+
+For home-grown programs, it really begins when you:
+* Put code into a revision control system, such as git, or subversion.
+* Come to an agreement on how repositories should be organized
+* Come to an agreement on how programs should be deployed
+
+Yes, automation existed before those revision control systems existed, but managing
+automation environments without revision control is the pathway to misery.
+
+If you want to automate things: learn how to use a revision control system.
+
 ## Credentials
 
 ### Do's and Don'ts
@@ -47,6 +63,12 @@ some_unguessable_password
 
 ## Logging
 
+Basic logging functionality should include when a program started, finished, and
+if it encountered any problems.
+
+More in-depth logging can be considered a report, and you might want to handle that
+differently than basic logging.
+
 ### Do's and Don'ts
 
 #### Don't
@@ -77,3 +99,5 @@ of the files generated.  This helps prevent emailing sensitive information.
 #### Do
 
 * Include the host name, user, and path to the script that generated the email.
+If you have a rogue program sending out email, tracking it down can be VERY annoying.
+This helps.
