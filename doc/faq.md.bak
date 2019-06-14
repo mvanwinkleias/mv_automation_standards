@@ -60,7 +60,7 @@ Local files are a good option (with the correct permissions, of course).
 * Log when a program starts and ends.
 * Log the arguments the program was run with (unless they're sensitive; but why are you
 running programs with sensitive arguments?)
-* Have different options (verbose, debug) for logging when the log messages get unwieldy.
+* Have different options (verbose, debug) for logging when the log messages get unwieldly.
 * Recognize the difference between "logs" and "reports".  If a program logs many actions,
 you might want to output that to a separate file, and then log something like:
 	* ```Actions performed logged in: /opt/AwesomeSchool/output/project-name/script_name/2019-06-12-actions.txt```
@@ -76,4 +76,4 @@ of the files generated.  This helps prevent emailing sensitive information.
 
 #### Do
 
-* Include the host name, user, and path to the script that generated the email.
+* Include the hostname, user, and path to the script that generated the email.

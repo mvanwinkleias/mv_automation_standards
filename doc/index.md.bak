@@ -37,7 +37,7 @@ You don't need to memorize it.
 
 Then:
 
-* Create a repository that's laid out as documented in the "File system / 
+* Create a repository that's laid out as documented in the "Filesystem / 
 Repository Layout" section of this document
 * Put the script at the end of this document in the src/bin dir of the repository
 * Experiment and get a good idea of what's going on.  Get comfortable.
@@ -100,7 +100,7 @@ works according to the cron standards listed below.
 These can be enabled from, for example, environment variables or command
 line arguments.
 
-## File system / Repository Layout (How)
+## Filesystem / Repository Layout (How)
 
 You need to choose and standardize where things are going to be installed,
 and laid out.
@@ -141,7 +141,7 @@ The following directories do not get checked in (use .gitignore)
 src/bin/my_script.sh works inside of this.
 
 
-### File system Layout
+### Filesystem Layout
 
 If you're not going to deploy things with packages, a basic layout could look
 something like:
@@ -326,7 +326,7 @@ Example:
 
 * Do not cron things as your own user.  Use a service user account.
 * You should avoid cronning things as root unless it needs it. (Principle of least
-privilege, etc).
+privilidge, etc).
 * Have email from that service user account forwarded to a mail address that is a
 group, even if that group only consists of one person.
 
@@ -354,7 +354,7 @@ gonna cron, use /etc/cron.d .  If it's important:
 
 Scripts that send email (say, using another program) should include:
 
-* the host name
+* the hostname
 * the path to the script
 * the name of the user running the script
 
@@ -477,7 +477,7 @@ interfere with it.
 I'm open to the possibility of creating a workshop for "How __I__ do things"
 if the interest is there.
 
-# Idiosyncrasies
+# Idiosyncracies
 
 ## Hyphens vs. Underscores
 
