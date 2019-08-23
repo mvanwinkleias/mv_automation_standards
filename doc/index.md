@@ -326,7 +326,8 @@ Example:
 
 * Do not cron things as your own user.  Use a service user account.
 * You should avoid cronning things as root unless it needs it. (Principle of least
-privilege, etc).
+privilege, etc).  If, say you need to run nmap as a privileged user,
+Try this line for sudo config: ```service_user_name ALL= NOPASSWD: /usr/bin/nmap```
 * Have email from that service user account forwarded to a mail address that is a
 group, even if that group only consists of one person.
 
