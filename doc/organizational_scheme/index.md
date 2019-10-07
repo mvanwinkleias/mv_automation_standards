@@ -1,5 +1,9 @@
 # The Tools I Use and How I use them
 
+## Find Harmony
+
+![basic tools](./find_harmony.png)
+
 In generall, I tie everything together:
 
 * Revision control commit messages contain the ticket numbers for the issue you're working on
