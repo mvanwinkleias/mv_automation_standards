@@ -151,22 +151,19 @@ This is how I name things when the ticketing system is unavailable, or it doesn'
 
 This goes in a wiki.  It looks something like this:
 
-```
-# Some VPN Service
-
-## License Information
-
-To determine what license is installed:
-
-* vpn_service --license
-
-To install new license file:
-
-* vpn_service --install-license license.txt
-
-## Associated Tickets:
-* rt.example.com/Ticket/Display.html?id=29110 - VPN Issues.  How to install license.  Tricky
-
-```
+> # Some VPN Service
+> 
+> ## License Information
+> 
+> To determine what license is installed:
+> 
+> * vpn_service --license
+> 
+> To install new license file:
+> 
+> * vpn_service --install-license license.txt
+> 
+> ## Associated Tickets:
+> * rt.example.com/Ticket/Display.html?id=29110 - VPN Issues.  How to install license.  Tricky
 
 In the ticket, I'll put a link to the page for "Some VPN Service".
