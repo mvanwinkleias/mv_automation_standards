@@ -1,5 +1,44 @@
 # The Tools I Use and How I use them
 
+In generall, I tie everything together:
+
+* Revision control commit messages contain the ticket numbers for the issue you're working on
+* The wiki contain
+	* links to the repositories for projects
+	* links to tickets
+	* links to external documentation (etc)
+	* Project Documentation
+* Project Repositories
+	* mention the wiki for "environment specific" documentation
+	* contain project specific documentation
+
+## Workflows
+
+### "Semi-Critical" Maintenance
+
+* Email ticket queue with subject like "Rebooting F-200 AP"
+* Do work
+* Document the work in the ticket, include circumstances, etc
+* Resolve ticket
+
+### Project Work
+
+Sometimes when I'm working on a project, I'll need to create a ticket with another company.  Let's say I need to configure network cards on a new machine, but I'm having problems.
+
+I'll:
+
+* Create a ticket with a description
+* Create a ticket in the other company's queue, and mention our internal ticket number
+* Document the company's ticket number in my ticket
+
+## Trello (Post-it Board)
+
+Trello tells me what to work on.
+
+My trello cards have links to tickets, and to documentation systems.
+
+My manager can tell me what to work on via Trello (and the ticketing system).
+
 ## Ticketing System
 
 Start a ticket if any of the following apply:
@@ -7,12 +46,23 @@ Start a ticket if any of the following apply:
 * You need to quickly and uniquely identify something (I.E. get a ticket number)
 * People will be alerted somehow by your work
 * People will want to know if something is being worked on
+* You want to document it
+
+... If it's work, you probably should have a ticket for it.
+
+### Periodically Groom Ticketing System
+
+You're gonna wanna do this.
+
+* Get people to close out what they can
+* Prioritize the ones that aren't closed
+* Create trello tickets for them if they're important
 
 ### Break Up the Queues
 
 Make sure you have a way of at least classifying tickets.  Some tickets were just a log that something happened.  Some cover continuing issues.  Some might just be a TODO.
 
-I, personally, am not against having a large number of "Open" tickets.  I use another tool, Trello, to tell me what I should be working on.
+I, personally, am not against having a large number of "Open" tickets.
 
 * I log the work in the tickets.
 * I put a link to the documentation in the ticket.
@@ -91,8 +141,28 @@ The __28911-collocation_switch_upgrade__ directory might contain installation in
 
 This is how I name things when the ticketing system is unavailable, or it doesn't warrant creating a ticket.  __YYYY-MM-DD-description__
 
-## Trello (Post-it Board)
+## Documentation
 
-Trello tells me what to work on.
+### Environment Specific
 
-My trello cards have links to tickets, and to documentation systems.
+This goes in a wiki.  It looks something like this:
+
+```
+# Some VPN Service
+
+## License Information
+
+To determine what license is installed:
+
+* vpn_service --license
+
+To install new license file:
+
+* vpn_service --install-license license.txt
+
+## Associated Tickets:
+* rt.example.com/Ticket/Display.html?id=29110 - VPN Issues.  How to install license.  Tricky
+
+```
+
+In the ticket, I'll put a link to the page for "Some VPN Service".
