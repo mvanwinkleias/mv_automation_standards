@@ -66,11 +66,11 @@ You're gonna wanna do this.
 
 Make sure you have a way of at least classifying tickets.  Some tickets were just a log that something happened.  Some cover continuing issues.  Some might just be a TODO.
 
-I, personally, am not against having a large number of "Open" tickets.
+I, personally, am not against having a large number of "Open" tickets.  I:
 
-* I log the work in the tickets.
-* I put a link to the documentation in the ticket.
-* I put a section, "Associated Tickets" in my documentation, and link the tickets there.
+* log the work in the tickets.
+* put a link to the documentation in the ticket.
+* put a section, "Associated Tickets" in my documentation, and link the tickets there.
 
 * General queue
 * Group specific queues
