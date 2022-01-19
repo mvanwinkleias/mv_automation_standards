@@ -371,6 +371,11 @@ This way (although there might be the potential for a potential reordering of st
 In order to accomplish this, these commands can be put at the top of a script, or before the command in a cron job:
 
 ```
+# Environment Settings
+PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+SHELL=/bin/bash
+# MAILTO=email@example.com
+
 # This is order dependent.
 exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; 
 ```
