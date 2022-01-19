@@ -351,6 +351,42 @@ gonna cron, use /etc/cron.d .  If it's important:
 * It shouldn't run as a non-service user account
 * It should require some level of restricted permissions to alter
 
+### Don't Redirect STDOUT or STDERR; But...
+
+Ideally, Unix programs shouldn't output anything if stuff ran without issue, unless they're told to be verbose.
+
+Some programs violate this convention.  Also, sometimes we'd like to know that a program (which violates this convention) has successfully run.
+
+This is why it can be dangerous to redirect all output of a program in a cron job to, say, /dev/null.
+
+As a middle ground, we can:
+* copy stderr to syslog (via logger), and redirect that to stdout
+* redirect stdout to syslog (via logger)
+
+This way (although there might be the potential for a potential reordering of stdout and stderr via logger):
+* We won't see stdout messages from cron
+* We will be emailed stderr messages from cron
+* We can examine syslog, which should contain both
+
+In order to accomplish this, these commands can be put at the top of a script, or before the command in a cron job:
+
+```
+# This is order dependent.
+exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; 
+```
+
+Here's an example test script:
+```
+#!/bin/bash
+
+# This is order dependent.
+exec 2> >(tee >(logger) )
+exec 1> >(logger)
+
+echo "This is a test of stdout."
+>&2 echo "This is a test of stderr."
+```
+
 ## Email
 
 Scripts that send email (say, using another program) should include:
