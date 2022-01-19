@@ -351,6 +351,27 @@ gonna cron, use /etc/cron.d .  If it's important:
 * It shouldn't run as a non-service user account
 * It should require some level of restricted permissions to alter
 
+### "Long" (as in long commands) or "complex" cron jobs
+
+Cron jobs at most should only:
+	* (Optionally) Source environment settings via a "."
+	* (Optionally) run a simple if statement (i.e. Is this service running?)
+	* Run one command that's optionally wrapped inside another command; 
+	i.e. ```ssh user@host "ls"```
+
+Separate scripts (anything more...):
+	* multi-step processes
+	* Processes that require lots of arguments
+
+A long string, or a long path are not necessarily an issue.
+
+If the script:
+	* makes no changes to the system
+	* is otherwise trivial
+	* is not part of critical infrastructure
+	
+then the rules can be (slightly...) relaxed.
+
 ### Don't Redirect STDOUT or STDERR; But...
 
 Ideally, Unix programs shouldn't output anything if stuff ran without issue, unless they're told to be verbose.
