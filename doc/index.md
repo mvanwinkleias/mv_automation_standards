@@ -377,7 +377,7 @@ SHELL=/bin/bash
 # MAILTO=email@example.com
 
 # This is order dependent.
-exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; 
+exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; /your/command/here ...
 ```
 
 Here's an example test script:
