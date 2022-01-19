@@ -363,7 +363,7 @@ As a middle ground, we can:
 * copy stderr to syslog (via logger), and redirect that to stdout
 * redirect stdout to syslog (via logger)
 
-This way (although there might be the potential for a potential reordering of stdout and stderr via logger):
+This way (although there might be the potential for a reordering of stdout and stderr via logger):
 * We won't see stdout messages from cron
 * We will be emailed stderr messages from cron
 * We can examine syslog, which should contain both
