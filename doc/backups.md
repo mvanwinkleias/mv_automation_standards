@@ -17,3 +17,13 @@ When actions like *rsync* or *scp* are performed, you should:
 * use the options appropriate for the file transfer to preserve the mtime of the files (so they are easily rotated)
 
 The reason you should want to put things in a directory under $HOME, as opposed to just in $HOME is that it makes file rotation easier.
+
+
+## Culling
+
+Backup culling should run as the service user for that backup set
+
+## Monitoring
+
+If using cron to monitor then backups make sure that you use a user that isn't at risk
+of getting deleted.
