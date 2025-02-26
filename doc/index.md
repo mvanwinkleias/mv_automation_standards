@@ -415,6 +415,9 @@ echo "This is a test of stdout."
 
 ## Email
 
+
+### What to include
+
 Scripts that send email (say, using another program) should include:
 
 * the host name
@@ -422,6 +425,14 @@ Scripts that send email (say, using another program) should include:
 * the name of the user running the script
 
 inside the text of the email.
+
+### Whom to email
+
+While the best practices above imply these things, here they are stated
+explicitly:
+
+* Never hard-code an email address UNLESS that email address is an alias / group
+* Never directly email an individual person
 
 ## Emailing Output
 
