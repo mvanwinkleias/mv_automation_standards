@@ -398,7 +398,13 @@ SHELL=/bin/bash
 # MAILTO=email@example.com
 
 # This is order dependent.
-0 * * * * exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; /your/command/here ...
+# If there is output to stderr, it goes to both stderr and logger.
+# Output to stdout just gets logged.
+0 * * * * exec 2> >(tee >(logger) ) ; exec 1> >(logger) ; /usr/local/bin/your_command_here.pl 
+
+# Or just log both stderr and stdout, and when there's a problem "alert" on that:
+0 * * * * exec 2> >(logger) ; exec 1> >(logger) ; /usr/local/bin/your_command_here.pl && touch /var/tmp/your_command_here.success
+30 * * * * [ -z "$(find /var/tmp/your_command_here.success -mmin -240 2>/dev/null)" ] && echo "ALERT: your_command_here has not completed successfully in >4 hours! Check host $(hostname)."
 ```
 
 Here's an example test script:
