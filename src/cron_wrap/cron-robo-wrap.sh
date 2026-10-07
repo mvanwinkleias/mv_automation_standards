@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+all_arguments=( "$@" )
 function cron_robo_wrap_usage
 {
 	cat << EOF
@@ -30,8 +32,8 @@ logger_tag="$1" ; shift
 leak_mode="$1" ; shift
 success_mmin="$1" ; shift
 success_file="/var/tmp/${logger_tag}.success"
-stdout_tag="$logger_tag Info:"
-stderr_tag="$logger_tag Error:"
+stdout_tag="$logger_tag Info"
+stderr_tag="$logger_tag Error"
 
 if [[ -z "$logger_tag" ]]
 then
@@ -65,8 +67,12 @@ command_result=0
 command_to_run=( "$@" )
 
 success_file="/var/tmp/${logger_tag}.success"
-stdout_tag="$logger_tag Info:"
-stderr_tag="$logger_tag Error:"
+stdout_tag="$logger_tag Info"
+stderr_tag="$logger_tag Error"
+
+pid=$$
+
+logger --tag cron-robo-wrap -- "$$ Running:" "${command_to_run[*]}"
 
 if [[ "$leak_mode" == "none" ]]
 then
@@ -99,6 +105,6 @@ fi
 [ -z "$(find $success_file -mmin -$success_mmin 2>/dev/null)" ]\
 && >&2 printf "ALERT: $logger_tag hasn't run successfully in > $success_mmin minutes.\n"
 
+logger --tag cron-robo-wrap -- "$$ Done.  Result: $command_result" 
 exit $command_result
-
 
